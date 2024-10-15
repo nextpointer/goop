@@ -2,10 +2,6 @@
 #roomID {
   color: #6dc46d;
 }
-/* main{
-    width: 100%;
-    /* background-color: #836dc4; */
-/* } */ */
 
 .chat-section {
   height: 65vh;
@@ -13,6 +9,10 @@
   /* background-color: rgb(73, 122, 195); */
   /* border: 1px solid white; */
   overflow-y: scroll;
+  scrollbar-width: none;
+  transition: all ease 1s;
+  font-size: 5vw;
+  
 }
 
 .msg{
@@ -24,7 +24,7 @@
 
 }
 .msg span{
-    font-size: 1.5rem;
+    /* font-size: 1.5rem; */
 
 }
 .mine{
@@ -63,5 +63,23 @@
 
 }
 
+
+#chat-username{
+  color: #6dc46d;
+  
+}
+
+#chat-msg{
+  letter-spacing: 0.1rem;
+}
+
+#leave-room-btn{
+  margin-bottom: 0.7rem;
+}
+#leave-room-btn:hover{
+  background-color: rgb(241, 87, 87);
+  color: #fff;
+
+}
 
 

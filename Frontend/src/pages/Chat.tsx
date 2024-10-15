@@ -1,7 +1,7 @@
 import { useParams,useNavigate } from "react-router-dom";
 
 import "../Chat.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect,useRef } from "react";
 import socket from "../socket";
 import { PopUp } from "../components/PopUp";
 import { v4 as uuidv4 } from "uuid";
@@ -24,10 +24,23 @@ export const Chat = () => {
   const [showPopUP, setPopup] = useState<boolean>(true);
   const [nameInput, setNameInput] = useState<string>("");
   const [userId,setUserId] = useState<string>("")
-  
+  const ChatSectionRef = useRef<HTMLDivElement>(null);
   const scrollToBottom = () => {
-    window.scrollTo(0, document.body.scrollHeight);
+    if (ChatSectionRef.current) {
+      setTimeout(() => {
+        ChatSectionRef.current?.scrollTo({
+          top: ChatSectionRef.current.scrollHeight,
+          behavior: 'smooth',
+        });
+      }, 100);
+    }
   };
+  
+  
+  
+  
+  
+  
   
 
 useEffect(()=>{
@@ -103,14 +116,14 @@ useEffect(()=>{
         <h1>
           Room ID is <span id="roomID">{param.id}</span>
         </h1>
-        <button onClick={LeaveRoom}>Leave Room</button>
-        <div className="chat-section">
+        <button onClick={LeaveRoom} id="leave-room-btn">Leave Room</button>
+        <div className="chat-section" ref={ChatSectionRef}>
           {messages.map((message, index) => (
             <div
               key={index}
               className={`msg ${message.mine ? "mine" : "other"}`}
             >
-              <span>{message.username}:{message.message}</span>
+              <span id="chat-msg"><span id="chat-username">{message.username}</span>:{message.message}</span>
             </div>
           ))}
         </div>

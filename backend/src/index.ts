@@ -6,6 +6,7 @@ const app = express();
 const server =  createServer(app);
 
 const io = new Server(server, {
+  transports: ['websocket'],
   cors: {
     origin: "*",
     methods: ["GET", "POST"],
@@ -71,6 +72,6 @@ io.on("connection", (socket:Socket) => {
 });
 
 
-server.listen(3000, () => {
+server.listen(3000,"0.0.0.0", () => {
   console.log("server is running on 3000");
 });

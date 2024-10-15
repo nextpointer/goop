@@ -25,6 +25,7 @@
   /* background-color: red; */
   height: 30vh;
   width: 30%;
+  min-width: 300px;
   z-index: 1000;
   border: 2px #6dc46d;
   border-radius: 25px;
