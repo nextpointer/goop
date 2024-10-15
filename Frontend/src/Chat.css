@@ -1,0 +1,67 @@
+
+#roomID {
+  color: #6dc46d;
+}
+/* main{
+    width: 100%;
+    /* background-color: #836dc4; */
+/* } */ */
+
+.chat-section {
+  height: 65vh;
+  width: 100%;
+  /* background-color: rgb(73, 122, 195); */
+  /* border: 1px solid white; */
+  overflow-y: scroll;
+}
+
+.msg{
+    border: 1px solid;
+    border-radius: 25px;
+    margin: 5px;
+    padding: 1rem;
+    display: flex;
+
+}
+.msg span{
+    font-size: 1.5rem;
+
+}
+.mine{
+    border-color: rgb(230, 95, 95);
+    justify-content: end;
+}
+.other{
+   border-color: #435db8; 
+   justify-content: start;
+}
+
+.chat-input-section {
+    width: 100%;
+    /* background-color: #6da0c4; */
+    position: absolute;
+    bottom: 5px;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    align-items: center;
+    position: fixed;
+
+}
+
+.chat-input {
+  height: 2.5rem;
+  width: 35vw;
+  border: 1px solid #6dc46d;
+  background-color: transparent;
+  border-radius: 25px;
+  padding: 1rem 1.5rem  1rem 1.5rem;
+  outline: none;
+  font-size: 1.5rem;
+  resize: none;
+
+}
+
+
+

@@ -1,0 +1,41 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+
+.heading{
+  font-size: 5rem;
+  color: #6dc46d;
+
+}
+
+.options{
+  height: 20vh;
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.option-button{
+  display: flex;
+  gap: 2px;
+}
+
+.goop-input{
+  height: 2.5rem;
+  width: 15vw;
+  border-radius: 25px;
+  outline: none;
+  border: 1px solid #6dc46d;
+  background-color: transparent;
+  padding-left:1.5rem ;
+  padding-right:1.5rem ;
+  font-size: large;
+}
