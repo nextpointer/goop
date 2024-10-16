@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import '../popup.css'
+import './popUp.css'
 
 interface Props{
     onSubmit:(name:string)=>void

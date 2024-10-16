@@ -91,7 +91,6 @@ export const Chat = () => {
         username: nameInput,
       };
 
-      console.log("Sending message:", newMessage); // Debugging log
       setChatInput("");
       socket.emit("message", newMessage, param.id);
     }
