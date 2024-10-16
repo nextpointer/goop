@@ -40,7 +40,7 @@ The project structure looks like this:
 
 1. Open your terminal and clone the Goop repository:
    ```bash
-   git clone https://github.com/your-username/goop.git
+   https://github.com/nextpointer/goop.git
    ```
 
 2. Navigate into the project directory:
