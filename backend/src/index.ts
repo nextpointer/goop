@@ -1,9 +1,11 @@
 import type { Socket } from "socket.io";
-const express = require('express');
+import type { Chat } from "./utils/types";
+import type { RoomMap } from "./utils/types";
+const express = require("express");
 import { createServer } from "node:http";
 import { Server } from "socket.io";
 const app = express();
-const server =  createServer(app);
+const server = createServer(app);
 
 const io = new Server(server, {
   cors: {
@@ -11,15 +13,6 @@ const io = new Server(server, {
     methods: ["GET", "POST"],
   },
 });
-
-interface Chat {
-  message: string;
-  mine?: boolean;
-  userId: string;
-  username: string;
-}
-
-type RoomMap = Map<string, string[]>;
 
 const rooms: RoomMap = new Map();
 
