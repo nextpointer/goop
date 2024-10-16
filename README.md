@@ -18,7 +18,7 @@ Goop is a real-time chat application with a frontend built using React and a bac
 ## Prerequisites
 
 Make sure you have the following installed:
-- **Bun**: A JavaScript runtime. [Installation Guide](https://bun.sh/docs/install)
+- **Bun**: A JavaScript runtime. [Installation Guide](https://bun.sh/docs/installation)
 - **Git**: For cloning the repository.
 
 ## Project Structure
