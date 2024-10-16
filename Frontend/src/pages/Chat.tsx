@@ -54,12 +54,10 @@ export const Chat = () => {
 
     if (nameInput) {
       socket.on("newUser", (updatedUsers: string[]) => {
-        console.log('New user list:', updatedUsers);
         setUsers(updatedUsers);
       });
 
       socket.on("message", (msg: Chat) => {
-        console.log('New message received:', msg);
         setMessages((prev) => [
           ...prev,
           {
