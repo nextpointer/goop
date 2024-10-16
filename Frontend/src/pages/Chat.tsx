@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
-import "../Chat.css";
+import "./Chat.css";
 import { useState, useEffect, useRef } from "react";
 import socket from "../socket";
 import { PopUp } from "../components/PopUp";
