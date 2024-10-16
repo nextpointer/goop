@@ -1,6 +1,6 @@
 import { BrowserRouter,Route,Routes } from 'react-router-dom'
 import { Home } from './pages/Home'
-import { Chat } from './pages/Chat'
+import { Chats } from './pages/Chat'
 import { NotFound } from './pages/PageNotFound'
 
 function App() {
@@ -10,7 +10,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Home/>}/>
-          <Route path='/room/:id' element={<Chat/>}/>
+          <Route path='/room/:id' element={<Chats/>}/>
           <Route path='*' element={<NotFound/>} />
         </Routes>
       </BrowserRouter>

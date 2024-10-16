@@ -1,18 +1,13 @@
 import { useParams, useNavigate } from "react-router-dom";
+import  { Chat } from "../utils/types";
 import "./Chat.css";
 import { useState, useEffect, useRef } from "react";
-import socket from "../socket";
+import socket from "../utils/socket";
 import { PopUp } from "../components/PopUp";
 import { v4 as uuidv4 } from "uuid";
 
-interface Chat {
-  message: string;
-  mine?: boolean;
-  userId: string;
-  username: string;
-}
 
-export const Chat = () => {
+export const Chats = () => {
   const param = useParams();
   const navigate = useNavigate();
   const [chatInput, setChatInput] = useState<string>("");
