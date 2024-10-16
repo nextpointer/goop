@@ -11,7 +11,7 @@
   overflow-y: scroll;
   scrollbar-width: none;
   transition: all ease 1s;
-  font-size: 5vw;
+  font-size: clamp(1rem, -1.5rem + 8vw,2rem);
   
 }
 
@@ -21,10 +21,6 @@
     margin: 5px;
     padding: 1rem;
     display: flex;
-
-}
-.msg span{
-    /* font-size: 1.5rem; */
 
 }
 .mine{

@@ -13,8 +13,6 @@ const io = new Server(server, {
   },
 });
 
-// create a map for Rooms
-const rooms = new Map();
 interface Chat {
   message: string;
   mine?: boolean;
@@ -22,56 +20,64 @@ interface Chat {
   username: string;
 }
 
-io.on("connection", (socket:Socket) => {
-  console.log("a new client connected");
+type RoomMap = Map<string, string[]>;
 
-  // join a room
+const rooms: RoomMap = new Map();
+
+io.on("connection", (socket: Socket) => {
+  console.log("A new client connected:", socket.id);
+
+  // Handle joining a room
   socket.on("join", (roomname: string) => {
     if (!rooms.has(roomname)) {
       rooms.set(roomname, []);
     }
-    rooms.get(roomname).push(socket.id);
+    const roomUsers = rooms.get(roomname);
+    if (roomUsers) {
+      roomUsers.push(socket.id);
+    }
     socket.join(roomname);
-    console.log(`client join room ${roomname}`);
-    io.to(roomname).emit("newUSer", rooms.get(roomname));
+    console.log(`Client joined room ${roomname}`);
+    io.to(roomname).emit("newUser", roomUsers);
   });
 
-  // leave a room
-  socket.on("leave", (roomName: string,name:string) => {
+  // Handle leaving a room
+  socket.on("leave", (roomName: string, name: string) => {
     if (rooms.has(roomName)) {
       const room = rooms.get(roomName);
-      const index = room.indexOf(socket.id);
-      if (index !== -1) {
-        room.splice(index, 1);
+      if (room) {
+        const index = room.indexOf(socket.id);
+        if (index !== -1) {
+          room.splice(index, 1);
+        }
       }
       socket.leave(roomName);
       console.log(`${name} left room ${roomName}`);
     }
   });
 
-  // handle the msg
-  socket.on("message", (msg:Chat, roomname:string) => {
-    console.log(`Received Message in room ${roomname}:`, msg);
-    if (roomname) {
+  // Handle message broadcasting
+  socket.on("message", (msg: Chat, roomname: string) => {
+    console.log(`Received message in room ${roomname}:`, msg);
+    if (roomname && rooms.has(roomname)) {
       io.to(roomname).emit("message", msg);
     } else {
-      io.emit("message", msg);
+      console.log(`Room ${roomname} does not exist or has no users.`);
     }
   });
 
-  // disconnect
+  // Handle disconnection
   socket.on("disconnect", () => {
-    console.log("a client disconnected");
-    for (const room of rooms.values()) {
-      const index = room.indexOf(socket.id);
+    console.log("A client disconnected:", socket.id);
+    rooms.forEach((roomUsers, roomName) => {
+      const index = roomUsers.indexOf(socket.id);
       if (index !== -1) {
-        room.splice(index, 1);
+        roomUsers.splice(index, 1);
       }
-    }
+    });
   });
 });
 
-
-server.listen(3000,"0.0.0.0", () => {
-  console.log("server is running on 3000");
+server.listen(3000, "0.0.0.0", () => {
+  console.log("Server is running on port 3000");
 });

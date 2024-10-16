@@ -1,7 +1,6 @@
-import { useParams,useNavigate } from "react-router-dom";
-
+import { useParams, useNavigate } from "react-router-dom";
 import "../Chat.css";
-import { useState, useEffect,useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import socket from "../socket";
 import { PopUp } from "../components/PopUp";
 import { v4 as uuidv4 } from "uuid";
@@ -15,70 +14,70 @@ interface Chat {
 
 export const Chat = () => {
   const param = useParams();
-  const navigate  =useNavigate()
-
+  const navigate = useNavigate();
   const [chatInput, setChatInput] = useState<string>("");
-
-  const [messages, setmessages] = useState<Chat[]>([]);
-  const [users, setUsers] = useState([]);
-  const [showPopUP, setPopup] = useState<boolean>(true);
+  const [messages, setMessages] = useState<Chat[]>([]);
+  const [users, setUsers] = useState<string[]>([]);
+  const [showPopUp, setPopUp] = useState<boolean>(true);
   const [nameInput, setNameInput] = useState<string>("");
-  const [userId,setUserId] = useState<string>("")
+  const [userId, setUserId] = useState<string>("");
   const ChatSectionRef = useRef<HTMLDivElement>(null);
+
   const scrollToBottom = () => {
     if (ChatSectionRef.current) {
       setTimeout(() => {
         ChatSectionRef.current?.scrollTo({
           top: ChatSectionRef.current.scrollHeight,
-          behavior: 'smooth',
+          behavior: "smooth",
         });
       }, 100);
     }
   };
-  
-  
-  
-  
-  
-  
-  
-
-useEffect(()=>{
-    const userID = uuidv4()
-    setUserId(userID)
-},[])
 
   useEffect(() => {
+    const userID = uuidv4();
+    setUserId(userID);
+  }, []);
+
+  useEffect(() => {
+    socket.on('connect_error', (err) => {
+      console.error('Connection error:', err);
+    });
+
+    socket.on('connect_timeout', (err) => {
+      console.error('Connection timeout:', err);
+    });
+
+    socket.on('error', (err) => {
+      console.error('Socket error:', err);
+    });
+
     if (nameInput) {
-      socket.on("newUser", (users) => {
-        setUsers(users);
+      socket.on("newUser", (updatedUsers: string[]) => {
+        console.log('New user list:', updatedUsers);
+        setUsers(updatedUsers);
       });
 
       socket.on("message", (msg: Chat) => {
-        setmessages((prev) => [
+        console.log('New message received:', msg);
+        setMessages((prev) => [
           ...prev,
-          { message: msg.message, mine:(msg.userId===userId)?true:false,userId:userId,username:msg.username },
+          {
+            message: msg.message,
+            mine: msg.userId === userId,
+            userId: msg.userId,
+            username: msg.username,
+          },
         ]);
         scrollToBottom();
       });
 
-      socket.on('join',(roomname)=>{
-        socket.emit("join",roomname)
-      })
-
-      socket.on("leave", (roomName) => {
-        socket.emit("leave", roomName);
-      });
-
-
       return () => {
         socket.off("newUser");
         socket.off("message");
-        socket.off("join");
-        socket.off("leave");
       };
     }
-  }, [nameInput]);
+  }, [nameInput, userId]);
 
   const handleTextArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setChatInput(e.target.value);
@@ -88,42 +87,41 @@ useEffect(()=>{
     if (chatInput.length > 0) {
       const newMessage: Chat = {
         message: chatInput,
-        userId:userId,
-        username:nameInput
+        userId: userId,
+        username: nameInput,
       };
 
-      // setmessages([...messages,newMessage])
+      console.log("Sending message:", newMessage); // Debugging log
       setChatInput("");
-      socket.emit("message", newMessage,param.id);
+      socket.emit("message", newMessage, param.id);
     }
   };
 
-
-  const onpopUpSubmit = (name: string) => {
+  const onPopUpSubmit = (name: string) => {
     setNameInput(name);
-    setPopup(false);
-    socket.emit("join",param.id)
+    setPopUp(false);
+    socket.emit("join", param.id);
   };
 
-  const LeaveRoom = ()=>{
-    socket.emit("leave",param.id,nameInput)
-    navigate("/")
-  }
+  const leaveRoom = () => {
+    socket.emit("leave", param.id, nameInput);
+    navigate("/");
+  };
+
   return (
     <>
       <main>
-        {showPopUP && <PopUp onSubmit={onpopUpSubmit} />}
+        {showPopUp && <PopUp onSubmit={onPopUpSubmit} />}
         <h1>
           Room ID is <span id="roomID">{param.id}</span>
         </h1>
-        <button onClick={LeaveRoom} id="leave-room-btn">Leave Room</button>
+        <button onClick={leaveRoom} id="leave-room-btn">Leave Room</button>
         <div className="chat-section" ref={ChatSectionRef}>
           {messages.map((message, index) => (
-            <div
-              key={index}
-              className={`msg ${message.mine ? "mine" : "other"}`}
-            >
-              <span id="chat-msg"><span id="chat-username">{message.username}</span>:{message.message}</span>
+            <div key={index} className={`msg ${message.mine ? "mine" : "other"}`}>
+              <span id="chat-msg">
+                <span id="chat-username">{message.username}</span>: {message.message}
+              </span>
             </div>
           ))}
         </div>
@@ -133,9 +131,7 @@ useEffect(()=>{
             onInput={handleTextArea}
             value={chatInput}
           />
-          <button className="chat-send" onClick={sendMessage}>
-            SEND
-          </button>
+          <button className="chat-send" onClick={sendMessage}>SEND</button>
         </div>
       </main>
     </>
