@@ -1,5 +1,3 @@
-
-
 # Goop
 
 Goop is a real-time chat application with a frontend built using React and a backend using Express, Socket.IO, and Bun runtime. This documentation provides instructions for setting up both the frontend and backend of the project.
@@ -9,6 +7,7 @@ Goop is a real-time chat application with a frontend built using React and a bac
 - [Prerequisites](#prerequisites)
 - [Project Structure](#project-structure)
 - [Installation](#installation)
+  - [Clone the Repository](#clone-the-repository)
   - [Frontend Setup](#frontend-setup)
   - [Backend Setup](#backend-setup)
 - [Accessing the Application](#accessing-the-application)
@@ -36,6 +35,18 @@ The project structure looks like this:
 ```
 
 ## Installation
+
+### Clone the Repository
+
+1. Open your terminal and clone the Goop repository:
+   ```bash
+   git clone https://github.com/your-username/goop.git
+   ```
+
+2. Navigate into the project directory:
+   ```bash
+   cd goop
+   ```
 
 ### Frontend Setup
 
@@ -102,4 +113,4 @@ We welcome contributions to improve Goop! To contribute:
 This project is licensed under the MIT License.
 ```
 
-This formatted `README.md` file provides clear instructions for setting up and running both the frontend and backend of the Goop application using Bun. You can paste this directly into your project's `README.md` file. Let me know if you need any more details!
+This version of the `README.md` file includes the steps for cloning the repository using Git, which will help users get started with setting up the project on their local machine. Let me know if you need any further adjustments!
