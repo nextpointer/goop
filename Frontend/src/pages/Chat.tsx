@@ -12,7 +12,7 @@ export const Chats = () => {
   const navigate = useNavigate();
   const [chatInput, setChatInput] = useState<string>("");
   const [messages, setMessages] = useState<Chat[]>([]);
-  const [users, setUsers] = useState<string[]>([]);
+  const [_, setUsers] = useState<string[]>([]);
   const [showPopUp, setPopUp] = useState<boolean>(true);
   const [nameInput, setNameInput] = useState<string>("");
   const [userId, setUserId] = useState<string>("");
